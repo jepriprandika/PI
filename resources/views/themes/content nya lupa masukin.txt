@@ -1,0 +1,36 @@
+ <!-- jumbotron -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Shocap Shoes Laundry</h1>
+    </div>
+  </div>
+
+  <!-- akhir jumbotron -->
+
+
+  <!-- Start about section -->
+  <section class="about-section" id="tentangkami">
+    <div class="container">
+      <div class="row  justify-content-between">
+        <div class="col-lg-6 col-md-6 about-left">
+          <img class="img-fluid bg-radius" src="{{ asset('themes/shocap/assets/img/nyuci.jpg') }}" alt="">
+        </div>
+        <div class="col-lg-5 col-md-5 about-right">
+          <h3>Tentang Kami</h3>
+          <h1>Shocap Shoes Laundry</h1>
+          <p style="text-align: justify;">
+            Shocap Shoes Laundry merupakan sebuah jasa perawatan sepatu yang berlokasi di tangerang, tepatnya berada di
+            perumnas. Untuk melayani pelanggan, Shocap Shoes Laundry aktif juga di sosial media dan apabila pelanggan
+            menagalami kesulitan atau ada yang ditanyakan bisa contact whatsapp kami.
+          </p>
+          <a class="btn btn-dark" href="">Lebih Lanjut</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End about section -->
+
+      <div class="section-title">
+        <h2 class="text-center">Layanan</h2>
+        <hr>
+      </div>
