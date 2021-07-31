@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 
 use Session;
@@ -15,6 +16,16 @@ use DB;
 
 class UserController extends Controller
 {
+
+    public function __construct() {
+        parent::__construct();
+        $this->middleware(function($request, $next) {
+            if (Auth::user()->roles->implode('name', '') != 'Admin') {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
 
     /**
      * Display a listing of the resource.
@@ -49,7 +60,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'bail|required|min:2',
+            'first_name' => 'bail|required|min:2',
+            'last_name' => 'bail|required|min:2',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'roles' => 'required|min:1'

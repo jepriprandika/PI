@@ -22,6 +22,12 @@ class ServiceController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->middleware(function($request, $next) {
+            if (Auth::user()->roles->implode('name', '') != 'Admin') {
+                return redirect('/');
+            }
+            return $next($request);
+        });
         $this->data['currentAdminMenu'] = 'catalog';
         $this->data['currentAdminSubMenu'] = 'service';
         $this->data['statuses'] = Service::statuses();

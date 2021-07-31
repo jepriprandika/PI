@@ -12,6 +12,7 @@ use App\Models\ProductInventory;
 use \App\Exceptions\OutOfStockException;
 
 use App\Authorizable;
+use Auth;
 
 /**
  * OrderController
@@ -26,7 +27,6 @@ use App\Authorizable;
  */
 class OrderController extends Controller
 {
-	use Authorizable;
 
 	/**
 	 * Create a new controller instance.
@@ -36,6 +36,12 @@ class OrderController extends Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->middleware(function($request, $next) {
+            if (Auth::user()->roles->implode('name', '') != 'Admin') {
+                return redirect('/');
+            }
+            return $next($request);
+        });
 
 		$this->data['currentAdminMenu'] = 'order';
 		$this->data['currentAdminSubMenu'] = 'order';
@@ -165,9 +171,9 @@ class OrderController extends Controller
 				];
 
 				if ($cancelOrder = $order->update($params) && $order->orderItems->count() > 0) {
-					foreach ($order->orderItems as $item) {
-						ProductInventory::increaseStock($item->product_id, $item->qty);
-					}
+					// foreach ($order->orderItems as $item) {
+					// 	ProductInventory::increaseStock($item->product_id, $item->qty);
+					// }
 				}
 				
 				return $cancelOrder;
@@ -203,6 +209,19 @@ class OrderController extends Controller
 		if ($order->save()) {
 			\Session::flash('success', 'The order has been marked as completed!');
 			return redirect('admin/orders');
+		}
+	}
+
+	public function changeStatus($status, $id) {
+		$order = Order::findOrFail($id);
+
+		$order->status = $status;
+		$order->approved_by = \Auth::user()->id;
+		$order->approved_at = now();
+
+		if ($order->save()) {
+			\Session::flash('success', 'Status order has been changed!');
+			return redirect('admin/orders/' . $id);
 		}
 	}
 

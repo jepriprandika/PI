@@ -3,6 +3,7 @@
 @section('content')
 <div class="content">
 	<div class="invoice-wrapper rounded border bg-white py-5 px-3 px-md-4 px-lg-5">
+		@include('admin.partials.flash')
 		<div class="d-flex justify-content-between">
 			<h2 class="text-dark font-weight-medium">Order ID #{{ $order->code }}</h2>
 			<div class="btn-group">
@@ -29,6 +30,7 @@
 								Invoice ID:
 								<span class="text-dark">#{{ $order->code }}</span>
 								<br> {{ \General::datetimeFormat($order->order_date) }}
+								<br> Order Status: {{ ucfirst($order->status) }}
 							</address>
 						</div>
 		</div>
@@ -59,17 +61,41 @@
 		<div class="row justify-content-end">
 			<div class="col-lg-5 col-xl-4 col-xl-3 ml-sm-auto">
 
+					@if (in_array($order->status, [\App\Models\Order::CREATED]))
+						<!-- <a href="{{ url('admin/orders/'. $order->id .'/cancel')}}" class="btn btn-block mt-2 btn-lg btn-success btn-pill"> Confirmed</a> -->
+						{!! Form::open(['url' => 'admin/orders/update/' . \App\Models\Order::CONFIRMED . '/' . $order->id, 'class' => 'delete', 'style' => 'display:block']) !!}
+						{!! Form::hidden('_method', 'PUT') !!}
+						{!! Form::submit('Confirmed', ['class' => 'btn btn-block mt-2 btn-lg btn-success btn-pill']) !!}
+						{!! Form::close() !!}
+					@endif
+
+					@if (in_array($order->status, [\App\Models\Order::CONFIRMED]))
+						<!-- <a href="{{ url('admin/orders/'. $order->id .'/cancel')}}" class="btn btn-block mt-2 btn-lg btn-success btn-pill"> Confirmed</a> -->
+						{!! Form::open(['url' => 'admin/orders/update/' . \App\Models\Order::DELIVERED . '/' . $order->id, 'class' => 'delete', 'style' => 'display:block']) !!}
+						{!! Form::hidden('_method', 'PUT') !!}
+						{!! Form::submit('Delivered', ['class' => 'btn btn-block mt-2 btn-lg btn-success btn-pill']) !!}
+						{!! Form::close() !!}
+					@endif
+
+					@if (in_array($order->status, [\App\Models\Order::DELIVERED]))
+						<!-- <a href="{{ url('admin/orders/'. $order->id .'/cancel')}}" class="btn btn-block mt-2 btn-lg btn-success btn-pill"> Confirmed</a> -->
+						{!! Form::open(['url' => 'admin/orders/update/' . \App\Models\Order::COMPLETED . '/' . $order->id, 'class' => 'delete', 'style' => 'display:block']) !!}
+						{!! Form::hidden('_method', 'PUT') !!}
+						{!! Form::submit('Completed', ['class' => 'btn btn-block mt-2 btn-lg btn-success btn-pill']) !!}
+						{!! Form::close() !!}
+					@endif
+
 					@if (in_array($order->status, [\App\Models\Order::CREATED, \App\Models\Order::CONFIRMED]))
 						<a href="{{ url('admin/orders/'. $order->id .'/cancel')}}" class="btn btn-block mt-2 btn-lg btn-warning btn-pill"> Cancel</a>
 					@endif
 
-					@if (!in_array($order->status, [\App\Models\Order::DELIVERED, \App\Models\Order::COMPLETED]))
+					<!-- @if (!in_array($order->status, [\App\Models\Order::DELIVERED, \App\Models\Order::COMPLETED]))
 						<a href="#" class="btn btn-block mt-2 btn-lg btn-secondary btn-pill delete" order-id="{{ $order->id }}"> Remove</a>
 
 						{!! Form::open(['url' => 'admin/orders/'. $order->id, 'class' => 'delete', 'id' => 'delete-form-'. $order->id, 'style' => 'display:none']) !!}
 						{!! Form::hidden('_method', 'DELETE') !!}
 						{!! Form::close() !!}
-					@endif
+					@endif -->
 			</div>
 		</div>
 	</div>

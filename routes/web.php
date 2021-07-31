@@ -30,7 +30,10 @@ Route::get('orders/cities', 'OrderController@cities');
 Route::group(
     ['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']],
     function () {
-        Route::get('dashboard', 'DashboardController@index');
+        Route::get('/', function() {
+            return redirect('/admin/dashboard');
+        });
+        Route::get('/dashboard', 'DashboardController@index');
         Route::resource('categories', 'CategoryController');
 
         Route::resource('services', 'ServiceController');
@@ -43,12 +46,13 @@ Route::group(
         Route::resource('users', 'UserController');
 
 
+        Route::resource('orders', 'OrderController');
         Route::get('orders/trashed', 'OrderController@trashed');
         Route::get('orders/restore/{orderID}', 'OrderController@restore');
-        Route::resource('orders', 'OrderController');
         Route::get('orders/{orderID}/cancel', 'OrderController@cancel');
         Route::put('orders/cancel/{orderID}', 'OrderController@doCancel');
         Route::post('orders/complete/{orderID}', 'OrderController@doComplete');
+        Route::put('orders/update/{status}/{orderID}', 'OrderController@changeStatus');
 
     }
 );

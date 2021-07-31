@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    public function __construct() {
+        parent::__construct();
+        $this->middleware(function($request, $next) {
+            if (Auth::user()->roles->implode('name', '') != 'Admin') {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      *

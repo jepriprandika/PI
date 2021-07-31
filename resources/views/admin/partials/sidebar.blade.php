@@ -39,12 +39,12 @@
 					</ul>
 				</li>
 				<li  class="has-sub {{ ($currentAdminMenu == 'order') ? 'expand active' : ''}}">
-					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#auth"
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#order"
 						aria-expanded="false" aria-controls="dashboard">
 						<i class="mdi mdi-cart-outline"></i>
 						<span class="nav-text">Orders</span> <b class="caret"></b>
 					</a>
-					<ul class="collapse {{ ($currentAdminMenu == 'order') ? 'show' : ''}}"  id="auth"
+					<ul class="collapse {{ ($currentAdminMenu == 'order') ? 'show' : ''}}"  id="order"
 						data-parent="#sidebar-menu">
 						<div class="sub-menu">
 							<li  class="{{ ($currentAdminSubMenu == 'order') ? 'active' : ''}}" >
@@ -52,7 +52,7 @@
 								<span class="nav-text">Orders</span>
 								</a>
 							</li>
-							<li class="{{ ($currentAdminSubMenu == 'trashed-order') ? 'active' : ''}}">
+							<!-- <li class="{{ ($currentAdminSubMenu == 'trashed-order') ? 'active' : ''}}">
 								<a class="sidenav-item-link" href="{{ url('admin/orders/trashed')}}">
 								<span class="nav-text">Trashed</span>
 								</a>
@@ -61,7 +61,7 @@
 								<a class="sidenav-item-link" href="{{ url('admin/shipments')}}">
 								<span class="nav-text">Shipments</span>
 								</a>
-							</li>
+							</li> -->
 						</div>
 					</ul>
 				</li> 

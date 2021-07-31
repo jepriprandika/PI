@@ -10,7 +10,7 @@
 					</div>
 					<div class="card-body">
 						@include('admin.partials.flash')
-						@include('admin.orders.filter');
+						@include('admin.orders.filter')
 						<table class="table table-bordered table-stripped">
 							<thead>
 								<th>Order ID</th>
@@ -28,7 +28,7 @@
 										</td>
 										<td>{{\General::priceFormat($order->base_total_price) }}</td>
 										<td>
-											{{ $order->customer_full_name }}<br>
+											{{ $order->customer_first_name . ' ' . $order->customer_last_name }}<br>
 											<span style="font-size: 12px; font-weight: normal"> {{ $order->customer_email }}</span>
 										</td>
 										<td>{{ $order->status }}</td>

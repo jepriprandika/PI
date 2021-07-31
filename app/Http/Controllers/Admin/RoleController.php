@@ -14,7 +14,16 @@ use Session;
 
 class RoleController extends Controller
 {
-    use Authorizable;
+    // use Authorizable;
+    public function __construct() {
+        parent::__construct();
+        $this->middleware(function($request, $next) {
+            if (Auth::user()->roles->implode('name', '') != 'Admin') {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      *
